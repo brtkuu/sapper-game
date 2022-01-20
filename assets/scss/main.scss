@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+//components
+@import './components/minesweeper-cell';
+@import './components/minesweeper-game';
+

@@ -1,0 +1,34 @@
+.minesweeper {
+  &-cell {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px rgba(38, 238, 12, 0.527) solid;
+    color: #2c3e50;
+    cursor: pointer;
+    display: flex;
+    font-size: 1.3em;
+    justify-content: center;
+    min-height: 35px;
+    min-width: 35px;
+    background-image: url('./static/images/grass.png');
+
+    &__hover {
+      filter: brightness(1.2);
+    }
+  }
+
+  &-bomb {
+    background: #c0392b;
+    background-image: url('./static/images/bomb.png');
+    background-size: contain;
+  }
+
+  &-open {
+    background: rgba(0, 0, 0, 0.05);
+    background-image: url('./static/images/dirt.png');
+  }
+
+  &-flag {
+    background: #2ecc71;
+  }
+}

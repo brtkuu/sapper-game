@@ -1,9 +1,16 @@
 <template>
-  <Tutorial />
+  <div>
+    <Game />
+  </div>
 </template>
+<script>
 
-<script lang="ts">
-import Vue from 'vue'
+import Game from '@/components/MinesweeperGame';
 
-export default Vue.extend({})
+export default {
+  name: 'Main',
+  components: {
+    Game
+  }
+};
 </script>
