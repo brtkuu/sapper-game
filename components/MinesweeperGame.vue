@@ -2,10 +2,10 @@
   <div class="minesweeper">
     <div class="minesweeper-status">
       <div class="minesweeper-bombcount">
-        {{bombCount}}
+        <i class="fas fa-bomb"></i>{{ bombCount }}
       </div>
       <a href="#" @click.prevent="initGrid">
-        &#9786;
+        <i class="far fa-smile"></i>
       </a>
       <minesweeper-timer
           class="minesweeper-timer"
@@ -14,7 +14,10 @@
       />
     </div>
 
-    <div class="minesweeper-grid">
+    <div
+        class="minesweeper-grid"
+        :style="`grid-template-columns: repeat(${cols}, 40px`"
+    >
       <minesweeper-cell
         v-for="(cell, i) in grid"
         :key="i"
@@ -42,11 +45,11 @@ export default {
   props: {
     cols: {
       type: Number,
-      default: 9,
+      default: 11,
     },
     rows: {
       type: Number,
-      default: 9,
+      default: 11,
     },
     bombs: {
       type: Number,
@@ -59,7 +62,9 @@ export default {
       finished: false,
       won: false,
       grid: [],
-      start: false
+      start: false,
+      bombSound: new Audio('/sounds/explosion.wav'),
+      clockSound: new Audio('/sounds/clock.ogg')
     };
   },
   mounted() {
@@ -71,6 +76,7 @@ export default {
       return `grid-template-columns: repeat(${cols}, 1fr);`;
     },
     initGrid() {
+      this.clockSound.play();
       this.start = false;
       let { bombs } = this;
       const { cols, rows } = this;
@@ -171,7 +177,8 @@ export default {
         return;
       }
       if (cell.hasBomb) {
-        // todo bomb!
+        this.bombSound.play();
+        this.clockSound.pause();
         const { grid } = this;
         grid.forEach((checkCell) => {
           if (checkCell.hasBomb) {
@@ -187,8 +194,8 @@ export default {
       this.checkNeighborhood(cell);
       this.haveWeWon();
     },
-    checkNeighborhood(cell, force) {
-      if (cell.bombCount !== 0 && force !== true) {
+    checkNeighborhood(cell) {
+      if (cell.bombCount !== 0) {
         return;
       }
 
@@ -204,8 +211,8 @@ export default {
       const { grid } = this;
       const neighborhood = [];
       let bombCount = 0;
-      for (let x = -1; x < 2; x += 1) {
-        for (let y = -1; y < 2; y += 1) {
+      for (let x = -1; x < 2; x++) {
+        for (let y = -1; y < 2; y++) {
           const cellIndex = this.getIndex(i, x, y);
           if (cellIndex !== false) {
             neighborhood.push(cellIndex);
