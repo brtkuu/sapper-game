@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.assets {
+  text-align: center
+}
+
 //components
 @import './components/minesweeper-cell';
 @import './components/minesweeper-game';
